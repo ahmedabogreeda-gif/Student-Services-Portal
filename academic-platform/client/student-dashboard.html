@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الطالب | منصة أكاديمية</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">🎓</span>
+            <span class="logo-text">منصة أكاديمية</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" onclick="showSection('overview'); return false;"><span>📊</span> نظرة عامة</a>
+            <a href="#" class="nav-item" onclick="showSection('orders'); return false;"><span>📋</span> طلباتي</a>
+            <a href="#" class="nav-item" onclick="showSection('new-order'); return false;"><span>📤</span> طلب جديد</a>
+            <a href="#" class="nav-item" onclick="showSection('payments'); return false;"><span>💳</span> المدفوعات</a>
+            <a href="#" class="nav-item" onclick="showSection('messages'); return false;"><span>💬</span> المحادثات<span class="badge">3</span></a>
+            <a href="#" class="nav-item" onclick="showSection('profile'); return false;"><span>👤</span> الملف الشخصي</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="index.html" class="logout-btn"><span>🚪</span> تسجيل الخروج</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="user-info">
+                <div class="user-details"><span class="user-name" id="userName">أحمد محمد</span><span class="user-role">طالب</span></div>
+                <div class="user-avatar" id="userAvatar">أ</div>
+            </div>
+        </header>
+
+        <section class="content-section active" id="overview">
+            <h2 class="page-title">مرحباً، <span id="welcomeName">أحمد</span>! 👋</h2>
+            <div class="stats-grid">
+                <div class="stat-box blue"><div class="stat-icon">📋</div><div class="stat-info"><span class="stat-value" id="totalOrders">12</span><span class="stat-label">إجمالي الطلبات</span></div></div>
+                <div class="stat-box green"><div class="stat-icon">✅</div><div class="stat-info"><span class="stat-value" id="completedOrders">8</span><span class="stat-label">منفذة</span></div></div>
+                <div class="stat-box orange"><div class="stat-icon">⏳</div><div class="stat-info"><span class="stat-value" id="pendingOrders">3</span><span class="stat-label">قيد التنفيذ</span></div></div>
+                <div class="stat-box red"><div class="stat-icon">💰</div><div class="stat-info"><span class="stat-value" id="totalSpent">450</span><span class="stat-label">ريال مدفوع</span></div></div>
+            </div>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header"><h3>📋 آخر الطلبات</h3><a href="#" onclick="showSection('orders'); return false;" class="view-all">عرض الكل</a></div>
+                    <div class="orders-list" id="recentOrders">
+                        <div class="order-item"><div class="order-info"><span class="order-id">#1205</span><span class="order-type">واجب</span><span class="order-subject">رياضيات</span></div><span class="status completed">✅ منفذ</span></div>
+                        <div class="order-item"><div class="order-info"><span class="order-id">#1204</span><span class="order-type">بحث</span><span class="order-subject">تاريخ</span></div><span class="status pending">⏳ قيد التنفيذ</span></div>
+                        <div class="order-item"><div class="order-info"><span class="order-id">#1203</span><span class="order-type">اختبار</span><span class="order-subject">فيزياء</span></div><span class="status waiting">💳 انتظار الدفع</span></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>💬 آخر المحادثات</h3><a href="#" onclick="showSection('messages'); return false;" class="view-all">عرض الكل</a></div>
+                    <div class="messages-list" id="recentMessages">
+                        <div class="message-item"><div class="message-avatar admin">أ</div><div class="message-content"><span class="message-sender">الأدمن</span><p class="message-text">تم إنجاز طلبك #1205، يمكنك التحميل الآن</p><span class="message-time">منذ 5 دقائق</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="orders">
+            <h2 class="page-title">📋 طلباتي</h2>
+            <div class="card">
+                <div class="filters-bar">
+                    <select class="filter-select" id="orderFilter" onchange="filterOrders()">
+                        <option value="">جميع الحالات</option>
+                        <option value="completed">منفذ</option>
+                        <option value="in_progress">قيد التنفيذ</option>
+                        <option value="pending">بانتظار الدفع</option>
+                    </select>
+                    <input type="text" class="search-input" id="orderSearch" placeholder="🔍 البحث..." onkeyup="searchOrders()">
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="ordersTable">
+                        <thead><tr><th>#</th><th>النوع</th><th>المادة</th><th>التاريخ</th><th>المبلغ</th><th>الحالة</th><th>الإجراء</th></tr></thead>
+                        <tbody id="ordersTableBody">
+                            <tr><td>#1205</td><td>واجب</td><td>رياضيات</td><td>2026/06/15</td><td>50 ريال</td><td><span class="badge-status completed">✅ منفذ</span></td><td><button class="btn-small" onclick="downloadFile('1205')">📥 تحميل</button></td></tr>
+                            <tr><td>#1204</td><td>بحث</td><td>تاريخ</td><td>2026/06/10</td><td>150 ريال</td><td><span class="badge-status pending">⏳ قيد التنفيذ</span></td><td><button class="btn-small">👁️ عرض</button></td></tr>
+                            <tr><td>#1203</td><td>اختبار</td><td>فيزياء</td><td>2026/06/05</td><td>80 ريال</td><td><span class="badge-status waiting">💳 انتظار الدفع</span></td><td><button class="btn-small" onclick="payOrder('1203')">💳 دفع</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="new-order">
+            <h2 class="page-title">📤 طلب جديد</h2>
+            <div class="card">
+                <form class="order-form" id="newOrderForm" onsubmit="submitOrder(event)">
+                    <div class="form-steps">
+                        <div class="step-indicator active" data-step="1"><span class="step-num">1</span><span>نوع الطلب</span></div>
+                        <div class="step-line"></div>
+                        <div class="step-indicator" data-step="2"><span class="step-num">2</span><span>التفاصيل</span></div>
+                        <div class="step-line"></div>
+                        <div class="step-indicator" data-step="3"><span class="step-num">3</span><span>الدفع</span></div>
+                    </div>
+
+                    <div class="step-content active" id="step1">
+                        <h3>اختر نوع الطلب</h3>
+                        <div class="order-types">
+                            <label class="order-type-card"><input type="radio" name="orderType" value="homework" data-price="50" data-name="واجب" checked><div class="type-content"><span class="type-icon">📝</span><span class="type-name">واجب</span><span class="type-price">من 30 ريال</span></div></label>
+                            <label class="order-type-card"><input type="radio" name="orderType" value="research" data-price="150" data-name="بحث"><div class="type-content"><span class="type-icon">📖</span><span class="type-name">بحث</span><span class="type-price">من 100 ريال</span></div></label>
+                            <label class="order-type-card"><input type="radio" name="orderType" value="exam" data-price="80" data-name="اختبار"><div class="type-content"><span class="type-icon">🎯</span><span class="type-name">اختبار</span><span class="type-price">من 50 ريال</span></div></label>
+                            <label class="order-type-card"><input type="radio" name="orderType" value="project" data-price="250" data-name="مشروع"><div class="type-content"><span class="type-icon">💻</span><span class="type-name">مشروع</span><span class="type-price">من 200 ريال</span></div></label>
+                        </div>
+                        <button type="button" class="btn-next" onclick="nextStep(2)">التالي →</button>
+                    </div>
+
+                    <div class="step-content" id="step2">
+                        <h3>تفاصيل الطلب</h3>
+                        <div class="form-group"><label>المادة الدراسية</label><select name="subject" id="subject" required><option value="">اختر المادة</option><option value="math">رياضيات</option><option value="physics">فيزياء</option><option value="chemistry">كيمياء</option><option value="biology">أحياء</option><option value="history">تاريخ</option><option value="arabic">لغة عربية</option><option value="english">لغة إنجليزية</option><option value="programming">برمجة</option><option value="other">أخرى</option></select></div>
+                        <div class="form-group"><label>الموعد النهائي</label><input type="date" name="deadline" id="deadline" required></div>
+                        <div class="form-group"><label>تفاصيل الطلب</label><textarea name="details" id="details" rows="4" placeholder="اكتب تفاصيل طلبك هنا..." required></textarea></div>
+                        <div class="form-group"><label>📎 إرفاق الملفات</label><div class="file-upload" onclick="document.getElementById('orderFiles').click()"><input type="file" id="orderFiles" multiple hidden onchange="handleFileSelect(this)"><span class="upload-icon">📤</span><span id="fileLabel">اضغط هنا أو اسحب الملفات</span><small>PDF, Word, JPG — حتى 10 ميجا</small></div></div>
+                        <div class="form-buttons"><button type="button" class="btn-prev" onclick="prevStep(1)">← السابق</button><button type="button" class="btn-next" onclick="nextStep(3)">التالي →</button></div>
+                    </div>
+
+                    <div class="step-content" id="step3">
+                        <h3>الدفع</h3>
+                        <div class="payment-summary">
+                            <div class="summary-row"><span>نوع الطلب:</span><span id="summaryType">واجب</span></div>
+                            <div class="summary-row"><span>المادة:</span><span id="summarySubject">-</span></div>
+                            <div class="summary-row total"><span>المبلغ الإجمالي:</span><span id="summaryAmount">50 ريال</span></div>
+                        </div>
+                        <div class="payment-method">
+                            <h4>طريقة الدفع: تحويل بنكي</h4>
+                            <div class="bank-info"><p>🏦 البنك: الراجحي</p><p>👤 الاسم: منصة أكاديمية</p><p>📋 الحساب: SA03 8000 0000 0000 0000 0000</p></div>
+                        </div>
+                        <div class="form-group"><label>📎 رفع إيصال التحويل</label><div class="file-upload" onclick="document.getElementById('receiptFile').click()"><input type="file" id="receiptFile" accept="image/*" hidden onchange="handleReceiptSelect(this)"><span class="upload-icon">📸</span><span id="receiptLabel">اضغط لرفع صورة الإيصال</span><small>JPG, PNG — حتى 5 ميجا</small></div></div>
+                        <div class="form-buttons"><button type="button" class="btn-prev" onclick="prevStep(2)">← السابق</button><button type="submit" class="btn-submit">✅ تأكيد الطلب</button></div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="content-section" id="payments">
+            <h2 class="page-title">💳 المدفوعات</h2>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>الطلب</th><th>المبلغ</th><th>التاريخ</th><th>حالة الإيصال</th></tr></thead>
+                        <tbody>
+                            <tr><td>#1205</td><td>واجب رياضيات</td><td>50 ريال</td><td>2026/06/15</td><td><span class="badge-status completed">✅ تم التحقق</span></td></tr>
+                            <tr><td>#1203</td><td>اختبار فيزياء</td><td>80 ريال</td><td>2026/06/05</td><td><span class="badge-status waiting">⏳ بانتظار التحقق</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="messages">
+            <h2 class="page-title">💬 المحادثات</h2>
+            <div class="chat-container card">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message received"><div class="message-bubble"><p>مرحباً أحمد! كيف يمكنني مساعدتك اليوم؟</p><span class="message-time">10:00 ص</span></div></div>
+                </div>
+                <div class="chat-input"><input type="text" id="messageInput" placeholder="اكتب رسالتك..." onkeypress="if(event.key==='Enter')sendMessage()"><button onclick="sendMessage()">📤</button></div>
+            </div>
+        </section>
+
+        <section class="content-section" id="profile">
+            <h2 class="page-title">👤 الملف الشخصي</h2>
+            <div class="card">
+                <div class="profile-header"><div class="profile-avatar" id="profileAvatar">أ</div><div class="profile-info"><h3 id="profileName">أحمد محمد</h3><p id="profileEmail">ahmed@email.com</p><span class="badge-role">طالب</span></div></div>
+                <form class="profile-form" id="profileForm" onsubmit="updateProfile(event)">
+                    <div class="form-row"><div class="form-group"><label>الاسم الأول</label><input type="text" id="editFirstName" value="أحمد"></div><div class="form-group"><label>الاسم الأخير</label><input type="text" id="editLastName" value="محمد"></div></div>
+                    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="editEmail" value="ahmed@email.com" disabled></div>
+                    <div class="form-group"><label>رقم الجوال</label><input type="tel" id="editPhone" value="0501234567"></div>
+                    <button type="submit" class="btn-submit">حفظ التغييرات</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script src="js/app.js"></script>
+</body>
+</html>
